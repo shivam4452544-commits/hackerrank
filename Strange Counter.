@@ -1,0 +1,10 @@
+long strangeCounter(long t) {
+ long i = 1;
+ long j = 3;
+ while (t>i+j-1){
+    i = i + j;
+    j=j*2;
+    
+ }
+ return j -(t - i);
+}
