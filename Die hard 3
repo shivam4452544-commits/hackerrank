@@ -1,0 +1,27 @@
+
+long long GCD(long long a, long long b){
+    if (b==0)
+        return a;
+    return GCD(b,a%b);
+}
+char* solve(long long a, long long b, long long c) {
+    char* result = malloc(4*sizeof(char));
+    if (a==0&& b==0){
+        strcpy(result,c==0?"YES":"NO");
+    }
+    else if(a==0){
+        strcpy(result,c==0||c==b?"YES":"NO");
+    }
+    else if(b==0){
+        strcpy(result,c==0||c==a?"YES":"NO");
+    }
+    else if (c>(a>b?a:b)){
+        strcpy(result,"NO");
+    }
+    else {
+        strcpy(result,c%GCD(a,b)==0?"YES":"NO");
+    }
+        
+    return result;
+
+}
