@@ -1,0 +1,64 @@
+#include <stdio.h>
+#include <stdlib.h> // For qsort and malloc
+#include <stdbool.h> // For bool type
+
+// Comparison function for qsort
+int compare(const void *a, const void *b) {
+    return (*(int*)a - *(int*)b);
+}
+
+void manasaAndStones(int n, int a, int b) {
+    // If a and b are the same, there's only one possible last stone value.
+    if (a == b) {
+        printf("%d\n", (n - 1) * a);
+        return;
+    }
+
+    // Ensure 'a' is the smaller difference for easier iteration.
+    if (a > b) {
+        int temp = a;
+        a = b;
+        b = temp;
+    }
+
+    // The number of possible distinct last stone values is 'n'.
+    // We need to store these values and then print them in increasing order.
+    int *results = (int *)malloc(n * sizeof(int));
+    if (results == NULL) {
+        // Handle allocation error if necessary
+        return;
+    }
+
+    // Iterate to find all possible sums
+    // The last stone's value will be a sum of (n-1) differences.
+    // We can have 'i' instances of 'b' and (n-1-i) instances of 'a'.
+    for (int i = 0; i < n; i++) {
+        results[i] = (i * b) + ((n - 1 - i) * a);
+    }
+
+    // Sort the results in increasing order
+    qsort(results, n, sizeof(int), compare);
+
+    // Print the sorted results
+    for (int i = 0; i < n; i++) {
+        printf("%d%s", results[i], (i == n - 1) ? "" : " ");
+    }
+    printf("\n");
+
+    free(results); // Free allocated memory
+}
+
+int main() {
+    int T;
+    scanf("%d", &T);
+
+    while (T--) {
+        int n, a, b;
+        scanf("%d", &n);
+        scanf("%d", &a);
+        scanf("%d", &b);
+        manasaAndStones(n, a, b);
+    }
+
+    return 0;
+}
