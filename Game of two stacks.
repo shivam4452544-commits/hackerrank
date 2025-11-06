@@ -1,0 +1,29 @@
+int twoStacks(int maxSum, vector<int> a, vector<int> b) {
+    int sum = 0, count = 0, i = 0, j = 0, maxCount = 0;
+
+    // Take from stack a as much as possible
+    while (i < a.size() && sum + a[i] <= maxSum) {
+        sum += a[i];
+        i++;
+    }
+
+    maxCount = i;
+
+    // Now try taking from b one by one
+    while (j < b.size()) {
+        sum += b[j];
+        j++;
+
+        // If sum exceeds, remove from a (backtrack)
+        while (sum > maxSum && i > 0) {
+            i--;
+            sum -= a[i];
+        }
+
+        if (sum <= maxSum)
+            maxCount = max(maxCount, i + j);
+    }
+
+    return maxCount;
+}
+
